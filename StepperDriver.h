@@ -1,3 +1,6 @@
+#include <vector>
+#include <array>
+
 #define CCW 0x0
 #define CW 0x1
 
@@ -22,7 +25,7 @@ public:
         if (this->shouldStep())
         {
             this->step();
-            lastStep_ +=stepTime_; //not quite when the step occurred, but when it should've
+            lastStep_ += stepTime_; // not quite when the step occurred, but when it should've
         }
     }
 
@@ -53,19 +56,11 @@ public:
     }
 };
 
-class StepperGroup
+template <class All>
+void poke(All &all)
 {
-private:
-    Stepper motors[];
-
-public:
-    StepperGroup(Stepper motorsIn[]) : motors(motorsIn) {}
-
-    void poke()
+    for (auto &stepper : all)
     {
-        for (int i = 0; i < motors.length; i++)
-        {
-            motors[i].stepIfShould();
-        }
+        stepper.stepIfShould
     }
 };
