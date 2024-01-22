@@ -22,6 +22,7 @@ public:
         if (this->shouldStep())
         {
             this->step();
+            lastStep_ +=stepTime_; //not quite when the step occurred, but when it should've
         }
     }
 
@@ -48,6 +49,7 @@ public:
     {
         digitalWrite(stepPin_, HIGH);
         digitalWrite(stepPin_, LOW);
+        lastStep_ = millis();
     }
 };
 
@@ -55,7 +57,6 @@ class StepperGroup
 {
 private:
     Stepper motors[];
-    int nextSteps[];
 
 public:
     StepperGroup(Stepper motorsIn[]) : motors(motorsIn) {}
@@ -64,10 +65,7 @@ public:
     {
         for (int i = 0; i < motors.length; i++)
         {
-            if (motors[i]->shouldStep())
-            {
-                motors
-            }
+            motors[i].stepIfShould();
         }
     }
 };
